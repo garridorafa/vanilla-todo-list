@@ -23,12 +23,27 @@
             }
             taskList.innerHTML = html;
         }
-        
-        
     </script>
+    <style type="text/css">
+    input{
+        margin-top: 5%;
+    }
+    div.app{
+        background-color:greenyellow;
+        width: 300px;
+        height: 400px;
+        padding: 15px;
+        border-style: solid;
+        border-width: 10px;
+        border-color: rgb(0, 68, 3);
+    }
+    li{
+        list-style-type: none;
+    }
+    </style>
 </head>
 <body>
-    <div>
+    <div class = "app">
         <input type="text" id="input" placeholder="New task" >
         <input type="button" onclick="newTask()" value="ADD">
         <div>
