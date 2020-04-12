@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo List JS</title>
     <script>
-        var tasks = [];
+        var tasks = [{ title: 'asdasd', checked: true }];
 
         function newTask() {
             var input = document.getElementById('input');
-            tasks.push(input.value);
+            if (input.value.trim().length > 0) {
+                tasks.push({ title: input.value, checked: false });
+                printTaskList();
+            }
             input.value = '';
-            printTaskList();
         }
 
         function printTaskList() {
@@ -19,9 +21,27 @@
             var html = "";
 
             for (var i = 0; i < tasks.length; i++) {
-                html = html + '<li class="task"><input type="checkbox" name="" id="">' + tasks[i] + '</li>';               
+                var liClass = tasks[i].checked === true ? 'task checked' : 'task';
+                html = html + '<li class="' + liClass + '">' + printCheckbox(i) + tasks[i].title + '</li>';               
             }
             taskList.innerHTML = html;
+        }
+
+        function printCheckbox(i) {
+            var checked = tasks[i].checked == true ? 'checked' : ''
+            return '<input type="checkbox" onchange="checkTask(' + i + ')" ' + checked + ' >'
+        }
+
+        function checkTask(i) {
+            if (tasks[i].checked === true) {
+                tasks[i].checked = false
+            } else {
+                tasks[i].checked = true
+            }
+            
+            //tasks[i].checked = tasks[i].checked === true ? false : true
+            //tasks[i].checked = !tasks[i].checked
+            printTaskList();
         }
     </script>
     <style type="text/css">
@@ -31,7 +51,7 @@
     div.app{
         background-color:greenyellow;
         width: 300px;
-        height: 400px;
+        min-height: 400px;
         padding: 15px;
         border-style: solid;
         border-width: 10px;
@@ -40,9 +60,14 @@
     li{
         list-style-type: none;
     }
+    li.checked {
+        text-decoration: line-through;
+        color: #555;
+        font-style: italic;
+    }
     </style>
 </head>
-<body>
+<body onload="printTaskList()">
     <div class = "app">
         <input type="text" id="input" placeholder="New task" >
         <input type="button" onclick="newTask()" value="ADD">
