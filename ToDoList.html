@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo List JS</title>
     <script>
-        var tasks = [{ title: 'asdasd', checked: true }];
+        var tasks = [];
 
         function newTask() {
             var input = document.getElementById('input');
@@ -22,10 +22,12 @@
 
             for (var i = 0; i < tasks.length; i++) {
                 var liClass = tasks[i].checked === true ? 'task checked' : 'task';
-                html = html + '<li class="' + liClass + '">' + printCheckbox(i) + tasks[i].title + '</li>';               
+                html = html + '<li class="' + liClass + '">' + printCheckbox(i) + tasks[i].title +printDeleteBotton(i)+'</li>';               
             }
             taskList.innerHTML = html;
         }
+
+        //CheckBox
 
         function printCheckbox(i) {
             var checked = tasks[i].checked == true ? 'checked' : ''
@@ -43,10 +45,28 @@
             //tasks[i].checked = !tasks[i].checked
             printTaskList();
         }
+
+        //Delete botton
+
+        function printDeleteBotton(i){
+            return '<input type="button" onclick="deleteTask('+i+')" class="delete" value="Delete"/>'
+        }
+
+        function deleteTask(i) {
+            tasks.splice(i,1);
+            printTaskList();
+        }
+
+
     </script>
     <style type="text/css">
     input{
         margin-top: 5%;
+    }
+    input.delete{
+        position: absolute;
+        margin-top: 9px;
+        left: 284px;
     }
     div.app{
         background-color:greenyellow;
@@ -69,8 +89,8 @@
 </head>
 <body onload="printTaskList()">
     <div class = "app">
-        <input type="text" id="input" placeholder="New task" >
-        <input type="button" onclick="newTask()" value="ADD">
+        <input type="text" id="input" placeholder="New task"/>
+        <input type="button" onclick="newTask()" value="ADD"/>
         <div>
             <h1>ToDo List</h1>
             <ul id="task-list"></ul>
