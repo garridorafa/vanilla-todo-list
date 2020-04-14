@@ -6,6 +6,7 @@
     <title>ToDo List JS</title>
     <script>
         var tasks = [];
+        var notFiltered = [];
 
         function newTask() {
             var input = document.getElementById('input');
@@ -14,6 +15,19 @@
                 printTaskList();
             }
             input.value = '';
+        }
+
+        function findTask(){
+            var input = document.getElementById('input');
+            var filtered = [];
+            notFiltered = tasks;
+            for (var i = 0; i < tasks.length; i++) {
+                if (tasks[i].title===input.value) {
+                    filtered.push(tasks[i]);
+                };
+            };
+            tasks = filtered;
+            printTaskList();
         }
 
         function printTaskList() {
@@ -66,9 +80,10 @@
     input.delete{
         position: absolute;
         margin-top: 9px;
-        left: 284px;
+        right: 49px;
     }
     div.app{
+        position: relative;
         background-color:greenyellow;
         width: 300px;
         min-height: 400px;
@@ -90,7 +105,8 @@
 <body onload="printTaskList()">
     <div class = "app">
         <input type="text" id="input" placeholder="New task"/>
-        <input type="button" onclick="newTask()" value="ADD"/>
+        <input type="button" onclick="newTask()" value="Add"/>
+        <input type="button" onclick="findTask()" value="Find"/>
         <div>
             <h1>ToDo List</h1>
             <ul id="task-list"></ul>
