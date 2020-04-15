@@ -6,38 +6,43 @@
     <title>ToDo List JS</title>
     <script>
         var tasks = [];
-        var notFiltered = [];
+        
 
         function newTask() {
             var input = document.getElementById('input');
             if (input.value.trim().length > 0) {
                 tasks.push({ title: input.value, checked: false });
-                printTaskList();
+                printTaskList(tasks);
             }
             input.value = '';
         }
 
         function findTask(){
             var input = document.getElementById('input');
-            var filtered = [];
-            notFiltered = tasks;
+            var tasksFiltered = [];            
             for (var i = 0; i < tasks.length; i++) {
                 if (tasks[i].title===input.value) {
-                    filtered.push(tasks[i]);
+                    tasksFiltered.push(tasks[i]);
                 };
             };
-            tasks = filtered;
-            printTaskList();
+            printTaskList(tasksFiltered);
         }
 
-        function printTaskList() {
+        function printTaskList(taskListToPrint) {
             var taskList = document.getElementById('task-list');
             var html = "";
 
-            for (var i = 0; i < tasks.length; i++) {
-                var liClass = tasks[i].checked === true ? 'task checked' : 'task';
-                html = html + '<li class="' + liClass + '">' + printCheckbox(i) + tasks[i].title +printDeleteBotton(i)+'</li>';               
+            if (tasks.length===0) {
+                html = '<p class="alertText">Nothing to do? Start to add!!<p/>';
+            } else if (taskListToPrint.length===0) {
+                html = '<p class="alertText">No match ...<p/>';
+            }else{
+                for (var i = 0; i < taskListToPrint.length; i++) {
+                    var liClass = taskListToPrint[i].checked === true ? 'task checked' : 'task';
+                    html = html + '<li class="' + liClass + '">' + printCheckbox(i) + taskListToPrint[i].title +printDeleteBotton(i)+'</li>';               
+                }
             }
+
             taskList.innerHTML = html;
         }
 
@@ -68,12 +73,15 @@
 
         function deleteTask(i) {
             tasks.splice(i,1);
-            printTaskList();
+            printTaskList(tasks);
         }
 
 
     </script>
     <style type="text/css">
+    p.alertText{
+        font-style: italic;
+    }
     input{
         margin-top: 5%;
     }
@@ -85,7 +93,7 @@
     div.app{
         position: relative;
         background-color:greenyellow;
-        width: 300px;
+        width: 345px;
         min-height: 400px;
         padding: 15px;
         border-style: solid;
@@ -102,11 +110,12 @@
     }
     </style>
 </head>
-<body onload="printTaskList()">
+<body onload="printTaskList(tasks)">
     <div class = "app">
-        <input type="text" id="input" placeholder="New task"/>
+        <input type="text" id="input" placeholder="Task name"/>
         <input type="button" onclick="newTask()" value="Add"/>
         <input type="button" onclick="findTask()" value="Find"/>
+        <input type="button" onclick="printTaskList(tasks)" value="Clear Find"/>
         <div>
             <h1>ToDo List</h1>
             <ul id="task-list"></ul>
