@@ -6,7 +6,6 @@
     <title>ToDo List JS</title>
     <script>
         var tasks = [];
-        
 
         function newTask() {
             var input = document.getElementById('input');
@@ -21,7 +20,7 @@
             var input = document.getElementById('input');
             var tasksFiltered = [];            
             for (var i = 0; i < tasks.length; i++) {
-                if (tasks[i].title.indexOf(input.value)>-1) {
+                if (tasks[i].title.toLowerCase().indexOf(input.value.toLowerCase())!==-1) {
                     tasksFiltered.push(tasks[i]);
                 };
             };
