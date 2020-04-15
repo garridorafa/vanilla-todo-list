@@ -21,7 +21,7 @@
             var input = document.getElementById('input');
             var tasksFiltered = [];            
             for (var i = 0; i < tasks.length; i++) {
-                if (tasks[i].title===input.value) {
+                if (tasks[i].title.indexOf(input.value)>-1) {
                     tasksFiltered.push(tasks[i]);
                 };
             };
