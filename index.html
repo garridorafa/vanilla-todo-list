@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ToDo List JS</title>
+        <link rel="stylesheet" href="./style.css">
+        <script type="text/javascript" src="main.js"></script>
+    </head>
+
+    <body onload="printTaskList(tasks)">
+        <div class="app">
+            <h1>ToDo List</h1>
+            <input type="text" id="input" placeholder="Task name" onkeypress="handleEnter(event)" />
+            <input type="button" onclick="newTask()" value="Add" />
+            <input type="button" onclick="findTask()" value="Find" />
+            <input type="button" onclick="printTaskList(tasks)" value="Clear Find" />
+            <select onchange="filterPriority()" id = "priorityFilter" >
+                <option value="nothing">Nothing</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div>
+                <ul id="task-list"></ul>
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,36 @@
+p.alertText{
+    font-style: italic;
+}
+input.delete{
+    position: absolute;
+    margin-top: 0px;
+    right: 49px;
+}
+select.priority{
+    position: absolute;
+    right: 112px;
+    margin-top: 0px;
+}
+div.app{
+    position: relative;
+    background-color:greenyellow;
+    width: 345px;
+    min-height: 400px;
+    padding: 15px;
+    padding-top: 0px;
+    border-style: solid;
+    border-width: 10px;
+    border-color: rgb(0, 68, 3);
+}
+ul {
+    padding: 0;
+}
+li{
+    list-style-type: none;
+    padding-top: 15px;
+}
+li.checked {
+    text-decoration: line-through;
+    color: #555;
+    font-style: italic;
+}
