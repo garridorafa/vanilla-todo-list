@@ -57,7 +57,7 @@ function printTaskList(taskListToPrint) {
             var index = i;
             //if task.length != taskToPrint.length
             //Search the correct index in tasks
-            if (tasks.length === taskListToPrint.length){
+            if (tasks.length != taskListToPrint.length){
                 for (var j=0; j < tasks.length; j++) {
                     if (tasks[j].id === id) {
                         index = j;
