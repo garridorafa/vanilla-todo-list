@@ -1,4 +1,5 @@
 var tasks = [];
+var idGlobal = 0;
 
 function handleEnter(event) {
     if (event.code === 'Enter') {
@@ -9,7 +10,7 @@ function handleEnter(event) {
 function newTask() {
     var input = document.getElementById('input');
     if (input.value.trim().length > 0) {
-        tasks.push({ title: input.value, checked: false, priority: 'medium' });
+        tasks.push({ id:idGlobal++, title: input.value, checked: false, priority: 'medium' });
         printTaskList(tasks);
     }
     input.value = '';
@@ -51,12 +52,25 @@ function printTaskList(taskListToPrint) {
         html = '<p class="alertText">No match ...<p/>';
     } else {
         for (var i = 0; i < taskListToPrint.length; i++) {
-            var liClass = taskListToPrint[i].checked === true ? 'task checked' : 'task';
-            html = html + '<li class="' + liClass + '" id="task-' + i + '">';
-            html += printCheckbox(i);
-            html += taskListToPrint[i].title;
-            html += printPriority(i);
-            html += printDeleteBotton(i);
+            
+            var id = taskListToPrint[i].id;
+            var index = i;
+            //if task.length != taskToPrint.length
+            //Search the correct index in tasks
+            if (tasks.length === taskListToPrint.length){
+                for (var j=0; j < tasks.length; j++) {
+                    if (tasks[j].id === id) {
+                        index = j;
+                        break;
+                    }
+                }
+            }
+            var liClass = tasks[index].checked === true ? 'task checked' : 'task';
+            html = html + '<li class="' + liClass + '" id="task-' + index + '">';
+            html += printCheckbox(index);
+            html += tasks[index].title;
+            html += printPriority(index);
+            html += printDeleteBotton(index);
             html += '</li>';
         }
     }
@@ -66,39 +80,38 @@ function printTaskList(taskListToPrint) {
 
 //CheckBox
 
-function printCheckbox(i) {
-    var checked = tasks[i].checked == true ? 'checked' : ''
-    return '<input type="checkbox" onchange="checkTask(' + i + ')" ' + checked + ' >'
+function printCheckbox(index) {
+    var checked = tasks[index].checked == true ? 'checked' : ''
+    return '<input type="checkbox" onchange="checkTask(' + index + ')" ' + checked + ' >'
 }
 
-function checkTask(i) {
-    tasks[i].checked = tasks[i].checked === true ? false : true
+function checkTask(index) {
+    tasks[index].checked = tasks[index].checked === true ? false : true
     //tasks[i].checked = !tasks[i].checked
-    printTaskList();
+    printTaskList(tasks);
 }
 
 //Priority Botton
 
-function printPriority(i) {
-    var html = '<select class="priority" onchange="setPriority(event, ' + i + ')">'
-    html += '<option value="low" ' + (tasks[i].priority === 'low' ? 'selected' : '') + '>Low</option>'
-    html += '<option value="medium" ' + (tasks[i].priority === 'medium' ? 'selected' : '') + '>Medium</option>'
-    html += '<option value="high" ' + (tasks[i].priority === 'high' ? 'selected' : '') + '>High</option>'
+function printPriority(index) {
+    var html = '<select class="priority" onchange="setPriority(event, ' + index + ')">'
+    html += '<option value="low" ' + (tasks[index].priority === 'low' ? 'selected' : '') + '>Low</option>'
+    html += '<option value="medium" ' + (tasks[index].priority === 'medium' ? 'selected' : '') + '>Medium</option>'
+    html += '<option value="high" ' + (tasks[index].priority === 'high' ? 'selected' : '') + '>High</option>'
     return html + '</select>'
 }
 
-function setPriority(event, i) {
-    tasks[i].priority = event.target.value
+function setPriority(event, index) {
+    tasks[index].priority = event.target.value;
 }
 
 //Delete botton
 
-function printDeleteBotton(i) {
-    return '<input type="button" onclick="deleteTask(' + i + ')" class="delete" value="Delete"/>'
+function printDeleteBotton(index) {
+    return '<input type="button" onclick="deleteTask(' + index + ')" class="delete" value="Delete"/>'
 }
 
-function deleteTask(i) {
-    tasks.splice(i, 1);
-    document.getElementById('task-' + i).remove();
-    //printTaskList(tasks);
+function deleteTask(index) {
+    tasks.splice(index, 1);
+    document.getElementById('task-' + index).remove();
 }
