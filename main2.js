@@ -4,6 +4,7 @@ var id = 0;
 function getLi() {
     var li = document.createElement("li");
     li.className = "tasks";
+    li.id = id;
     return li;
 }
 
@@ -19,10 +20,10 @@ function getPriority() {
     return priority;
 }
 
-function deleteTask() {
+function deleteTask(id) {
     var taskslist = document.getElementsByClassName('tasks');
     for (var i = 0; i < taskslist.length; i++) {
-        if (taskslist[i].id === id) {
+        if (Number(taskslist[i].id) === id) {
             taskslist[i].remove();
             break;
         }
@@ -40,12 +41,12 @@ function getDeleteButton(id){
     deleteButton.value = "Delete";
     deleteButton.className = "delete";
     deleteButton.id = id;
-    deleteButton.onclick = deleteTask();
+    deleteButton.onclick = function () { deleteTask(id);};
     return deleteButton;
 }
 
 function getComponent(taskName) {
-    var li = getLi();
+    var li = getLi(id);
     var checkBox = getCheckBox();
     var priority = getPriority();
     var deleteButton = getDeleteButton(id);
