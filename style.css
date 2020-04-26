@@ -6,6 +6,22 @@ input.delete{
     margin-top: 0px;
     right: 49px;
 }
+.button{
+    background: white;
+    /* border: none; */
+    border-radius: 5px;
+    border: solid;
+    border-width: 2px;
+}
+#input{
+    padding-right: 39%;
+    padding-left: 6%;
+    border-radius: 8px;
+    border: none;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-bottom: 2%;
+}
 select.priority{
     position: absolute;
     right: 112px;
