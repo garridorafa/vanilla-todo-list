@@ -13,9 +13,9 @@
         <div class="app">
             <h1>ToDo List</h1>
             <input type="text" id="input" placeholder="Task name" onkeypress="handleEnter(event)" />
-            <input type="button" onclick="newTask()" value="Add" />
-            <input type="button" onclick="findTask()" value="Find" />
-            <input type="button" onclick="printTaskList(tasks)" value="Clear Find" />
+            <input type="button" class="button" onclick="newTask()" value="Add" />
+            <input type="button" class="button" onclick="findTask()" value="Find" />
+            <input type="button" class="button" onclick="printTaskList(tasks)" value="Clear Find" />
             <select onchange="filterPriority()" id = "priorityFilter" >
                 <option value="nothing">Nothing</option>
                 <option value="low">Low</option>

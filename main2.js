@@ -1,6 +1,17 @@
 var tasks = [];
 var id = 0;
 
+function findTask() {
+    var input = document.getElementById('input');
+    var tasksFiltered = [];
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].title.toLowerCase().indexOf(input.value.toLowerCase()) !== -1) {
+            tasksFiltered.push(tasks[i]);
+        };
+    };
+    printTaskList(tasksFiltered);
+}
+
 function getLi() {
     var li = document.createElement("li");
     li.className = "tasks";
@@ -66,6 +77,9 @@ function handleEnter(event) {
 function newTask() {
     var input = document.getElementById('input');
     if (input.value.trim().length > 0) {
+        if (tasks.length === 0) {
+            document.getElementsByClassName("alertText")[0].remove();
+        }
         var taskslist = document.getElementById('task-list');
         var newTask = getComponent(input.value);
         taskslist.appendChild(newTask);
@@ -74,7 +88,7 @@ function newTask() {
     input.value = '';
 }
 
-function printTaskList(tasks){
+function printTaskList(tasksToPrint){
     if (tasks.length === 0) {
         var ul = document.getElementById("task-list");
         var msg = document.getElementsByClassName("alertText");
@@ -83,6 +97,12 @@ function printTaskList(tasks){
             msg.className = "alertText";
             msg.innerText = "Nothing to do? Start to add!!";
             ul.appendChild(msg);            
+        } else {
+            for (var i; i < tasksToPrint.length; i++) {
+                li = getComponent(tasksToPrint[i].title);
+                var taskslist = document.getElementById('task-list');
+                taskslist.appendChild(li);
+            };
         }
     }
 }
