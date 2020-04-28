@@ -26,8 +26,17 @@ function getCheckBox() {
 }
 
 function getPriority() {
-    priority = document.createElement("select");
+    var priority = document.createElement("select");
     priority.className = 'priority';
+    var high = document.createElement("option");
+    high.appendChild(document.createTextNode("high"));
+    var medium = document.createElement("option");
+    medium.appendChild(document.createTextNode("medium"));
+    var low = document.createElement("option");
+    low.appendChild(document.createTextNode("low"));
+    priority.appendChild(low);
+    priority.appendChild(medium);
+    priority.appendChild(high);
     return priority;
 }
 
@@ -43,6 +52,9 @@ function deleteTask(id) {
         if (tasks[i].id === id) {
             tasks.splice(i,1);
         };
+    }
+    if (tasks.length === 0) {
+        printTaskList(tasks);
     }
 }
 
