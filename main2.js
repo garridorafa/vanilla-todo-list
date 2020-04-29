@@ -3,12 +3,7 @@ var id = 0;
 
 function findTask() {
     var input = document.getElementById('input');
-    var tasksFiltered = [];
-    for (var i = 0; i < tasks.length; i++) {
-        if (tasks[i].title.toLowerCase().indexOf(input.value.toLowerCase()) !== -1) {
-            tasksFiltered.push(tasks[i]);
-        };
-    };
+    var tasksFiltered = tasks.filter(function (task){return task.title.toLowerCase() === input.value.toLowerCase();});
     printTaskList(tasksFiltered);
 }
 
@@ -26,7 +21,7 @@ function getCheckBox() {
 }
 
 function priorityChange(event, id) {
-    for (i=0; i < tasks.length; i++) {
+    for (i = 0; i < tasks.length; i++) {
         if (tasks[i].id === Number(id)) {
             tasks[i].priority = event.target.value;
             break;
@@ -48,7 +43,7 @@ function getPriority() {
     priority.appendChild(low);
     priority.appendChild(medium);
     priority.appendChild(high);
-    priority.onchange = function () {priorityChange(event, priority.id);};
+    priority.onchange = function () { priorityChange(event, priority.id); };
     return priority;
 }
 
@@ -62,7 +57,7 @@ function deleteTask(id) {
     };
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].id === id) {
-            tasks.splice(i,1);
+            tasks.splice(i, 1);
         };
     }
     if (tasks.length === 0) {
@@ -70,13 +65,13 @@ function deleteTask(id) {
     }
 }
 
-function getDeleteButton(id){
+function getDeleteButton(id) {
     var deleteButton = document.createElement("input");
     deleteButton.type = "button";
     deleteButton.value = "Delete";
     deleteButton.className = "delete";
     deleteButton.id = id;
-    deleteButton.onclick = function () { deleteTask(id);};
+    deleteButton.onclick = function () { deleteTask(id); };
     return deleteButton;
 }
 
@@ -107,26 +102,33 @@ function newTask() {
         var taskslist = document.getElementById('task-list');
         var newTask = getComponent(input.value);
         taskslist.appendChild(newTask);
-        tasks.push({ id:id++, title: input.value, checked: false, priority: 'medium' });
+        tasks.push({ id: id++, title: input.value, checked: false, priority: 'medium' });
     };
     input.value = '';
 }
 
-function printTaskList(tasksToPrint){
+function printTaskList(tasksToPrint) {
     if (tasks.length === 0) {
-        var ul = document.getElementById("task-list");
-        var msg = document.getElementsByClassName("alertText");
-        if (msg.length === 0) {
-            msg = document.createElement("p");
-            msg.className = "alertText";
-            msg.innerText = "Nothing to do? Start to add!!";
-            ul.appendChild(msg);            
-        } else {
-            for (var i; i < tasksToPrint.length; i++) {
-                li = getComponent(tasksToPrint[i].title);
-                var taskslist = document.getElementById('task-list');
-                taskslist.appendChild(li);
-            };
+
+        printEmpty();
+
+    } else {
+        var taskslist = document.getElementById('task-list');
+        taskslist.innerText = "";
+        for (var i=0; i < tasksToPrint.length; i++) {
+            li = getComponent(tasksToPrint[i].title);
+            taskslist.appendChild(li);
         }
+    }
+}
+
+function printEmpty() {
+    var ul = document.getElementById("task-list");
+    var msg = document.getElementsByClassName("alertText");
+    if (msg.length === 0) {
+        msg = document.createElement("p");
+        msg.className = "alertText";
+        msg.innerText = "Nothing to do? Start to add!!";
+        ul.appendChild(msg);
     }
 }
