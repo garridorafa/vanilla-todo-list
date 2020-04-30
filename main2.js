@@ -40,21 +40,24 @@ function priorityChange(event, id) {
     for (i = 0; i < tasks.length; i++) {
         if (tasks[i].id === Number(id)) {
             tasks[i].priority = event.target.value;
+            saveData();
             break;
         };
     }
 }
 
-function getPriority() {
+function getPriority(taskId, taskPriority) {
     var priority = document.createElement("select");
     priority.className = 'priority';
-    priority.id = id;
+    priority.id = taskId;
     var high = document.createElement("option");
+    taskPriority === "high" ? high.setAttribute("selected", "selected"):"";
     high.appendChild(document.createTextNode("high"));
     var medium = document.createElement("option");
-    medium.setAttribute("selected", "selected")
+    taskPriority === "medium" ? medium.setAttribute("selected", "selected"):"";
     medium.appendChild(document.createTextNode("medium"));
     var low = document.createElement("option");
+    taskPriority === "low" ? low.setAttribute("selected", "selected"):"";
     low.appendChild(document.createTextNode("low"));
     priority.appendChild(low);
     priority.appendChild(medium);
@@ -96,7 +99,7 @@ function getDeleteButton(id) {
 function getComponent(tasksToPrint) {
     var li = getLi(tasksToPrint.id);
     var checkBox = getCheckBox();
-    var priority = getPriority();
+    var priority = getPriority(tasksToPrint.id, tasksToPrint.priority);
     var deleteButton = getDeleteButton(tasksToPrint.id);
     li.append(checkBox);
     li.append(tasksToPrint.title);
