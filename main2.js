@@ -31,13 +31,16 @@ function getLi(taskId) {
 }
 
 function checkTask (taskId) {
+    li = document.getElementById(taskId);
     for (i = 0; i < tasks.length; i++) {
         if (tasks[i].id === Number(taskId)) {
             tasks[i].checked = !tasks[i].checked;
+            li.className = tasks[i].checked ? "checked":"";
             saveData();
             break;
         };
     }
+    
 }
 
 function getCheckBox(taskId, taskChecked) {
@@ -110,6 +113,7 @@ function getDeleteButton(id) {
 
 function getComponent(tasksToPrint) {
     var li = getLi(tasksToPrint.id);
+    tasksToPrint.checked ? li.className = "checked" : "";
     var checkBox = getCheckBox(tasksToPrint.id, tasksToPrint.checked);
     var priority = getPriority(tasksToPrint.id, tasksToPrint.priority);
     var deleteButton = getDeleteButton(tasksToPrint.id);
