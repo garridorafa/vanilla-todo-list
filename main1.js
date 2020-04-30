@@ -1,5 +1,21 @@
 var tasks = [];
-var idGlobal = 0;
+
+var i = 0;
+while (localStorage.getItem(i)){
+    var a = localStorage.getItem(i);
+    a = JSON.parse(a);
+    tasks.push(a);
+    i++;
+}
+
+var idGlobal = tasks[i] ? tasks[i].id + 1: 0; //Set next number than the bigger id
+
+function saveData() {
+    localStorage.clear();
+    for (i = 0 ; i < tasks.length; i++) {
+        localStorage.setItem(i, JSON.stringify(tasks[i]));
+    }
+}
 
 function handleEnter(event) {
     if (event.code === 'Enter') {
@@ -10,7 +26,7 @@ function handleEnter(event) {
 function newTask() {
     var input = document.getElementById('input');
     if (input.value.trim().length > 0) {
-        tasks.push({ id:idGlobal++, title: input.value, checked: false, priority: 'medium' });
+        tasks.push({ id:idGlobal++, title: input.value, checked: false, priority: 'medium' });        
         printTaskList(tasks);
     }
     input.value = '';
@@ -55,7 +71,7 @@ function printTaskList(taskListToPrint) {
             
             var id = taskListToPrint[i].id;
             var index = i;
-            //if task.length != taskToPrint.length
+
             //Search the correct index in tasks
             if (tasks.length != taskListToPrint.length){
                 for (var j=0; j < tasks.length; j++) {
@@ -72,6 +88,7 @@ function printTaskList(taskListToPrint) {
             html += printPriority(index);
             html += printDeleteBotton(index);
             html += '</li>';
+            saveData()
         }
     }
 

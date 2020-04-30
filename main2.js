@@ -1,5 +1,21 @@
 var tasks = [];
-var id = 0;
+
+var i = 0;
+while (localStorage.getItem(i)){
+    var a = localStorage.getItem(i);
+    a = JSON.parse(a);
+    tasks.push(a);
+    i++;
+}
+
+var id = tasks[i] ? tasks[i].id + 1: 0; //Set next number than the bigger id
+
+function saveData() {
+    localStorage.clear();
+    for (i = 0 ; i < tasks.length; i++) {
+        localStorage.setItem(i, JSON.stringify(tasks[i]));
+    }
+}
 
 function findTask() {
     var input = document.getElementById('input');
@@ -103,6 +119,7 @@ function newTask() {
         var newTask = getComponent(input.value);
         taskslist.appendChild(newTask);
         tasks.push({ id: id++, title: input.value, checked: false, priority: 'medium' });
+        saveData();
     };
     input.value = '';
 }
