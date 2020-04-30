@@ -30,9 +30,21 @@ function getLi(taskId) {
     return li;
 }
 
-function getCheckBox() {
+function checkTask (taskId) {
+    for (i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === Number(taskId)) {
+            tasks[taskId].checked = !tasks[taskId].checked;
+            saveData();
+            break;
+        };
+    }
+}
+
+function getCheckBox(taskId, taskChecked) {
     var checkBox = document.createElement("input");
     checkBox.type = "checkbox";
+    taskChecked ? checkBox.checked = "checked": "";
+    checkBox.onchange = function () {checkTask (taskId);}
     return checkBox;
 }
 
@@ -98,7 +110,7 @@ function getDeleteButton(id) {
 
 function getComponent(tasksToPrint) {
     var li = getLi(tasksToPrint.id);
-    var checkBox = getCheckBox();
+    var checkBox = getCheckBox(tasksToPrint.id, tasksToPrint.checked);
     var priority = getPriority(tasksToPrint.id, tasksToPrint.priority);
     var deleteButton = getDeleteButton(tasksToPrint.id);
     li.append(checkBox);
