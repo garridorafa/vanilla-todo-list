@@ -33,7 +33,7 @@ function getLi(taskId) {
 function checkTask (taskId) {
     for (i = 0; i < tasks.length; i++) {
         if (tasks[i].id === Number(taskId)) {
-            tasks[taskId].checked = !tasks[taskId].checked;
+            tasks[i].checked = !tasks[i].checked;
             saveData();
             break;
         };
