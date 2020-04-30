@@ -8,7 +8,7 @@ while (localStorage.getItem(i)){
     i++;
 }
 
-var id = tasks[i] ? tasks[i].id + 1: 0; //Set next number than the bigger id
+var id = tasks[i-1] ? tasks[i-1].id + 1: 0; //Set next number than the bigger id
 
 function saveData() {
     localStorage.clear();
@@ -19,14 +19,14 @@ function saveData() {
 
 function findTask() {
     var input = document.getElementById('input');
-    var tasksFiltered = tasks.filter(function (task){return task.title.toLowerCase() === input.value.toLowerCase();});
+    var tasksFiltered = tasks.filter(function (task){return task.title.toLowerCase().indexOf(input.value.toLowerCase()) !== -1;});
     printTaskList(tasksFiltered);
 }
 
-function getLi() {
+function getLi(taskId) {
     var li = document.createElement("li");
     li.className = "tasks";
-    li.id = id;
+    li.id = taskId;
     return li;
 }
 
@@ -93,13 +93,13 @@ function getDeleteButton(id) {
     return deleteButton;
 }
 
-function getComponent(taskName) {
-    var li = getLi(id);
+function getComponent(tasksToPrint) {
+    var li = getLi(tasksToPrint.id);
     var checkBox = getCheckBox();
     var priority = getPriority();
-    var deleteButton = getDeleteButton(id);
+    var deleteButton = getDeleteButton(tasksToPrint.id);
     li.append(checkBox);
-    li.append(taskName);
+    li.append(tasksToPrint.title);
     li.append(priority);
     li.append(deleteButton);
     return li;
@@ -118,9 +118,10 @@ function newTask() {
             document.getElementsByClassName("alertText")[0].remove();
         }
         var taskslist = document.getElementById('task-list');
-        var newTask = getComponent(input.value);
+        tasks.push({ id: id, title: input.value, checked: false, priority: 'medium' });
+        var newTask = getComponent({ id: id, title: input.value, checked: false, priority: 'medium' });
+        id++;
         taskslist.appendChild(newTask);
-        tasks.push({ id: id++, title: input.value, checked: false, priority: 'medium' });
         saveData();
     };
     input.value = '';
@@ -135,7 +136,7 @@ function printTaskList(tasksToPrint) {
         var taskslist = document.getElementById('task-list');
         taskslist.innerText = "";
         for (var i=0; i < tasksToPrint.length; i++) {
-            li = getComponent(tasksToPrint[i].title);
+            li = getComponent(tasksToPrint[i]);
             taskslist.appendChild(li);
         }
     }
