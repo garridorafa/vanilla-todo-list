@@ -8,7 +8,7 @@ while (localStorage.getItem(i)){
     i++;
 }
 
-var idGlobal = tasks[i] ? tasks[i].id + 1: 0; //Set next number than the bigger id
+var idGlobal = tasks[i-1] ? tasks[i-1].id+1: 0; //Set next number than the bigger id
 
 function saveData() {
     localStorage.clear();
@@ -120,6 +120,7 @@ function printPriority(index) {
 
 function setPriority(event, index) {
     tasks[index].priority = event.target.value;
+    saveData();
 }
 
 //Delete botton
@@ -131,4 +132,5 @@ function printDeleteBotton(index) {
 function deleteTask(index) {
     tasks.splice(index, 1);
     document.getElementById('task-' + index).remove();
+    saveData();
 }
