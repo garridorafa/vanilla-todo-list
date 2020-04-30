@@ -74,6 +74,8 @@ function deleteTask(id) {
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].id === id) {
             tasks.splice(i, 1);
+            saveData();
+            break;
         };
     }
     if (tasks.length === 0) {
