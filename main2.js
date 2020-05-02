@@ -17,6 +17,21 @@ function saveData() {
     }
 }
 
+function filterPriority() {
+    var priorityValue = document.getElementById("priorityFilter").value;
+    var tasksFiltered = [];
+    if (priorityValue === "nothing"){
+        tasksFiltered = tasks;
+    }else{
+        for (var i = 0; i < tasks.length; i++) {
+            if(tasks[i].priority === priorityValue){
+                tasksFiltered.push(tasks[i]);
+            };
+        };
+    };
+    printTaskList(tasksFiltered);
+}
+
 function findTask() {
     var input = document.getElementById('input');
     var tasksFiltered = tasks.filter(function (task){return task.title.toLowerCase().indexOf(input.value.toLowerCase()) !== -1;});
