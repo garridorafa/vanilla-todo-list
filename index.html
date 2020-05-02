@@ -9,23 +9,29 @@
     </head>
 
     <body onload="printTaskList(tasks)">
-        <div class="app">
+
+        <div class="container">
             <h1>ToDo List</h1>
             <input type="text" id="input" placeholder="Task name" onkeypress="handleEnter(event)" />
-            <input type="button" class="button" onclick="newTask()" value="Add" />
-            <input type="button" class="button" onclick="findTask()" value="Find" />
-            <input type="button" class="button" onclick="printTaskList(tasks)" value="Clear Find" />
-            <select onchange="filterPriority()" id="priorityFilter">
-                <option value="nothing">Nothing</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-            <div>
+            <div class="buttons">
+                <input type="button" class="button" onclick="newTask()" value="Add" />
+                <input type="button" class="button" onclick="findTask()" value="Find" />
+                <input type="button" class="button" onclick="printTaskList(tasks)" value="Clear Find" />
+                <select onchange="filterPriority()" id="priorityFilter">
+                    <option value="nothing">Nothing</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>   
+    
+            <div class="listContent">
                 <ul id="task-list"></ul>
             </div>
         </div>
+
         <script type="text/javascript" src="main2.js"></script>
+        
     </body>
 
 </html>
