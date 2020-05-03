@@ -1,21 +1,27 @@
 var tasks = [];
 
-
 function create_UUID(){
     var dt = new Date().getTime();
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = (dt + Math.random()*16)%16 | 0;
         dt = Math.floor(dt/16);
-        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);  
     });
     return uuid;
 }
 
-while (localStorage.getItem(i)){
-    var a = localStorage.getItem(i);
-    a = JSON.parse(a);
-    tasks.push(a);
-    i++;
+function loadData() {
+    Object.keys(localStorage).forEach(function (id){
+        tasks.push( JSON.parse(localStorage.getItem(id)) );
+    })
+    tasks.sort(function (a, b) {
+        if (a.dateTime > b.dateTime) {
+            return 1;
+        } else {
+            return -1;
+        }
+    });
+    printTaskList(tasks);
 }
 
 function saveData() {
@@ -28,13 +34,14 @@ function filterPriority() {
     var tasksFiltered = [];
     if (priorityValue === "nothing"){
         tasksFiltered = tasks;
+
     }else{
-        for (var i = 0; i < tasks.length; i++) {
-            if(tasks[i].priority === priorityValue){
-                tasksFiltered.push(tasks[i]);
-            };
-        };
-    };
+
+        tasks.forEach(function (task){
+            task.priority === priorityValue ? tasksFiltered.push(task):'';
+        });
+
+    }
     printTaskList(tasksFiltered);
 }
 
@@ -159,7 +166,7 @@ function newTask() {
         }
         var taskslist = document.getElementById('task-list');
         var id = create_UUID();
-        taskToAdd = { id: id, title: input.value, checked: false, priority: 'medium' }
+        taskToAdd = { id: id, title: input.value, checked: false, priority: 'medium', dateTime: new Date().getTime() }
         tasks.push(taskToAdd);
         var newLiElement = getComponent(taskToAdd);
         taskslist.appendChild(newLiElement);

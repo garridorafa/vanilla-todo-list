@@ -1,11 +1,11 @@
 var tasks = [];
 
 var i = 0;
-while (localStorage.getItem(i)){
-    var a = localStorage.getItem(i);
-    a = JSON.parse(a);
-    tasks.push(a);
-    i++;
+function loadData() {
+    Object.keys(localStorage).forEach(function (id){
+        tasks.push( JSON.parse(localStorage.getItem(id)) );
+    })
+    printTaskList(tasks);
 }
 
 var idGlobal = tasks[i-1] ? tasks[i-1].id+1: 0; //Set next number than the bigger id
