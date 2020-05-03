@@ -1,6 +1,16 @@
 var tasks = [];
 
-var i = 0;
+
+function create_UUID(){
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
+
 while (localStorage.getItem(i)){
     var a = localStorage.getItem(i);
     a = JSON.parse(a);
@@ -8,13 +18,9 @@ while (localStorage.getItem(i)){
     i++;
 }
 
-var id = tasks[i-1] ? tasks[i-1].id + 1: 0; //Set next number than the bigger id
-
 function saveData() {
     localStorage.clear();
-    for (i = 0 ; i < tasks.length; i++) {
-        localStorage.setItem(i, JSON.stringify(tasks[i]));
-    }
+    tasks.forEach((task)=>localStorage.setItem(task.id,JSON.stringify(task)));
 }
 
 function filterPriority() {
@@ -38,17 +44,17 @@ function findTask() {
     printTaskList(tasksFiltered);
 }
 
-function getLi(taskId) {
+function getLi(id) {
     var li = document.createElement("li");
     li.className = "tasks";
-    li.id = taskId;
+    li.id = id;
     return li;
 }
 
-function checkTask (taskId) {
-    li = document.getElementById(taskId);
+function checkTask (id) {
+    li = document.getElementById(id);
     for (i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === Number(taskId)) {
+        if (tasks[i].id === id) {
             tasks[i].checked = !tasks[i].checked;
             li.className = tasks[i].checked ? "checked":"";
             saveData();
@@ -58,17 +64,17 @@ function checkTask (taskId) {
     
 }
 
-function getCheckBox(taskId, taskChecked) {
+function getCheckBox(id, taskChecked) {
     var checkBox = document.createElement("input");
     checkBox.type = "checkbox";
     taskChecked ? checkBox.checked = "checked": "";
-    checkBox.onchange = function () {checkTask (taskId);}
+    checkBox.onchange = function () {checkTask (id);}
     return checkBox;
 }
 
 function priorityChange(event, id) {
     for (i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === Number(id)) {
+        if (tasks[i].id === id) {
             tasks[i].priority = event.target.value;
             saveData();
             break;
@@ -76,10 +82,10 @@ function priorityChange(event, id) {
     }
 }
 
-function getPriority(taskId, taskPriority) {
+function getPriority(id, taskPriority) {
     var priority = document.createElement("select");
     priority.className = 'priority';
-    priority.id = taskId;
+    priority.id = id;
     var high = document.createElement("option");
     taskPriority === "high" ? high.setAttribute("selected", "selected"):"";
     high.appendChild(document.createTextNode("high"));
@@ -92,14 +98,14 @@ function getPriority(taskId, taskPriority) {
     priority.appendChild(low);
     priority.appendChild(medium);
     priority.appendChild(high);
-    priority.onchange = function () { priorityChange(event, priority.id); };
+    priority.onchange = function () { priorityChange(event, id); };
     return priority;
 }
 
 function deleteTask(id) {
     var taskslist = document.getElementsByClassName('tasks');
     for (var i = 0; i < taskslist.length; i++) {
-        if (Number(taskslist[i].id) === id) {
+        if (taskslist[i].id === id) {
             taskslist[i].remove();
             break;
         }
@@ -107,10 +113,10 @@ function deleteTask(id) {
     for (var i = 0; i < tasks.length; i++) {
         if (tasks[i].id === id) {
             tasks.splice(i, 1);
-            saveData();
             break;
         };
     }
+    saveData();
     if (tasks.length === 0) {
         printTaskList(tasks);
     }
@@ -152,10 +158,11 @@ function newTask() {
             document.getElementsByClassName("alertText")[0].remove();
         }
         var taskslist = document.getElementById('task-list');
-        tasks.push({ id: id, title: input.value, checked: false, priority: 'medium' });
-        var newTask = getComponent({ id: id, title: input.value, checked: false, priority: 'medium' });
-        id++;
-        taskslist.appendChild(newTask);
+        var id = create_UUID();
+        taskToAdd = { id: id, title: input.value, checked: false, priority: 'medium' }
+        tasks.push(taskToAdd);
+        var newLiElement = getComponent(taskToAdd);
+        taskslist.appendChild(newLiElement);
         saveData();
     };
     input.value = '';
