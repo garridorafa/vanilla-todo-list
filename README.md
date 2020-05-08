@@ -1,5 +1,5 @@
 # ToDO List
-A Todo List web application developed in javascript, html and CSS. This app is made in two differents ways at differents files: main1.js, and main2.js
+A Todo List web application developed in vanilla javascript, html and CSS. This app is made in two differents ways at differents files: main1.js, and main2.js
 
 ## main1.js
 This file was made with old method that changes the html, an reload all the document with each little .
