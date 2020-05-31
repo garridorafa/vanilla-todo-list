@@ -5,17 +5,23 @@ p.alertText{
     font-style: italic;
 }
 input.delete{
+    color: white;
     position: absolute;
-    margin-top: 0px;
-    right: 49px;
+    padding: 6px 10px;
+    margin-top: -4px;
+    right: 54px;
+    background-color: rgb(223, 18, 18);
+    border: 1.5px solid;
+    border-color: black;
+    border-radius: 50%;
 }
 .button{
     background: white;
-    /* border: none; */
     border-radius: 5px;
     border: solid;
     border-width: 2px;
 }
+
 #input{
     padding-right: 39%;
     padding-left: 6%;
@@ -27,7 +33,7 @@ input.delete{
 }
 select.priority{
     position: absolute;
-    right: 112px;
+    right: 98px;
     margin-top: 0px;
 }
 h1{

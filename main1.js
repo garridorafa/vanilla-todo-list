@@ -126,7 +126,7 @@ function setPriority(event, index) {
 //Delete botton
 
 function printDeleteBotton(index) {
-    return '<input type="button" onclick="deleteTask(' + index + ')" class="delete" value="Delete"/>'
+    return '<input type="button" onclick="deleteTask(' + index + ')" class="delete" value="x"/>'
 }
 
 function deleteTask(index) {

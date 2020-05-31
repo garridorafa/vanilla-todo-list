@@ -132,7 +132,7 @@ function deleteTask(id) {
 function getDeleteButton(id) {
     var deleteButton = document.createElement("input");
     deleteButton.type = "button";
-    deleteButton.value = "Delete";
+    deleteButton.value = "x";
     deleteButton.className = "delete";
     deleteButton.id = id;
     deleteButton.onclick = function () { deleteTask(id); };
